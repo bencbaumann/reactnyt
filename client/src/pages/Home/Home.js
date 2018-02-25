@@ -5,7 +5,7 @@ import Saved from "../../components/Saved";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { Container } from "../../components/Grid";
-import ReactLoading from 'react-loading';
+import Loading from 'react-loading-components';
 
 class Home extends Component {
   state = {
@@ -41,7 +41,6 @@ class Home extends Component {
   }
 
   saveArticle = data => {
-    console.log("I'm in the parent beotch")
     API.saveArticle(data)
     .then(res =>{
       console.log(res.data)
@@ -64,7 +63,11 @@ class Home extends Component {
     return (
       <Container fluid>
         <Search title="Search" fetchArticles={this.fetchArticles.bind(this)}/>
-        {this.state.searching ? <ReactLoading type="bars" color="red" height='100' width='100' /> : ""}
+        {this.state.searching ? <div className="center">
+            <Loading type='ball_triangle' width={100} height={100} fill='#f44242' />
+            <Loading type='ball_triangle' width={100} height={100} fill='#f44242' />
+            <Loading type='ball_triangle' width={100} height={100} fill='#f44242' />
+          </div> : ""}
         {this.state.searchResults.length ? <Results 
                                               title="Results"
                                               saveArticle={this.saveArticle.bind(this)}

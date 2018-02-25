@@ -9,20 +9,22 @@
     "start": "concurrently \"nodemon server.js\" \"npm run client\"",
     "build": "node scripts/build.js",
     "seed": "node scripts/seedDB.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "standard && node my-tests.js",
     "installDeps": "yarn && cd client && yarn"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^3.5.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "standard": "^11.0.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.17.2",
     "dotenv": "^5.0.0",
     "express": "^4.15.4",
-    "mongoose": "^4.11.7"
+    "mongoose": "^4.11.7",
+    "socket.io": "^2.0.4"
   }
 }
