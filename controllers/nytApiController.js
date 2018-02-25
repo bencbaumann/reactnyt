@@ -5,6 +5,10 @@ const {stringify} = require('querystring')
 // Defining methods for the booksController
 module.exports = {
   fetch: function (req, res) {
+    const io = req.app.get('socketio')
+    io.emit('fetchingArticles', {
+      msg: 'Fetching Articles - this is a socket.io message from the server'
+    })
     console.log(req.body)
     const qs = stringify({
       'api-key': process.env.APIKEY,
@@ -16,6 +20,9 @@ module.exports = {
     axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?${qs}`)
       .then(response => {
         res.json(response.data.response.docs)
+        io.emit('gotArticles', {
+          msg: 'Got Articles - this is a socket.io message from the server, interesting fact, I\'m being returned AFTER res.json'
+        })
       })
       .catch(err => {
         res.status(422).json(err)

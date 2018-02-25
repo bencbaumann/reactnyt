@@ -1,6 +1,5 @@
 import React from "react"
 import {Card, CardTitle, Input, Button} from 'react-materialize'
-import API from '../../utils/API'
 
 class Search extends React.Component {
 

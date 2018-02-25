@@ -4,7 +4,11 @@ const Schema = mongoose.Schema
 const articleSchema = new Schema({
   title: { type: String, required: true },
   date: { type: Date, required: true },
-  url: String
+  url: String,
+  notes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Note'
+  }]
 })
 
 const Article = mongoose.model('Article', articleSchema)

@@ -14,11 +14,23 @@ export default {
     console.log('getting articles')
     return axios.get('/api/articles')
   },
+  getSavedArticle: article => {
+    return axios.get(`/api/articles/${article._id}`)
+  },
   // Deletes the book with the given id
   deleteArticle: function (data) {
     console.log('deleting articles')
     console.log(data._id)
     return axios.delete('/api/articles/' + data._id)
+  },
+  saveNote: function (data) {
+    console.log('saving note')
+    console.log(data)
+    return axios.post('/api/articles/' + data.articleId, {note: data.note})
+  },
+  deleteNote: function (noteId) {
+    console.log('deleting note')
+    return axios.post('/api/articles/note/delete', {noteId: noteId})
   },
   // Gets the book with the given id
   getBook: function (id) {

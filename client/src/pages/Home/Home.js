@@ -1,23 +1,30 @@
-import React, { Component } from "react";
-import Search from "../../components/Search";
-import Results from "../../components/Results";
-import Saved from "../../components/Saved";
-import API from "../../utils/API";
-import { Link } from "react-router-dom";
-import { Container } from "../../components/Grid";
-import Loading from 'react-loading-components';
+import React, { Component } from "react"
+import Search from "../../components/Search"
+import Results from "../../components/Results"
+import Saved from "../../components/Saved"
+import Modal from "../../components/Modal"
+import API from "../../utils/API"
+import { Container } from "../../components/Grid"
+import Loading from 'react-loading-components'
+import subscribeToServerSockets from '../../utils/socket'
 
 class Home extends Component {
   state = {
     searching: false,
-    resultsLoading: false,
+    showModal: false,
+    article: {},
     searchResults: [],
-    savedArticles: []
-  };
+    savedArticles: [],
+    note: ""
+  }
 
   componentDidMount() {
-    this.getSavedArticles();
+    this.getSavedArticles()
+
+    subscribeToServerSockets.subscribeToServerSockets()
   }
+
+  handleChange = e => this.setState({[e.target.name]: e.target.value})
 
   // this is for the NYT API
   fetchArticles = data => {
@@ -36,6 +43,16 @@ class Home extends Component {
       .then(res =>{
         console.log(res.data)
         this.setState({ savedArticles: res.data })
+      })
+      .catch(err => console.log(err.response))
+  }
+
+  getSavedArticle = article => {
+    console.log(article)
+    API.getSavedArticle(article)
+      .then(res =>{
+        console.log(res.data)
+        this.setState({ article: res.data })
       })
       .catch(err => console.log(err.response))
   }
@@ -59,6 +76,35 @@ class Home extends Component {
     .catch(err => console.log(err.response))
   }
 
+  saveNote = articleId => {
+    const data = {}
+    data.articleId = articleId
+    data.note = this.state.note
+    
+    console.log(data)
+    API.saveNote(data)
+    .then(res =>{
+      this.setState({ note: "", article: res.data})
+      this.getSavedArticles()
+    })
+    .catch(err => console.log(err.response))
+  }
+
+  deleteNote = noteId => {
+    API.deleteNote(noteId)
+    .then(res =>{
+      console.log(res.data)
+      this.setState({ note: "" })
+      this.getSavedArticle(this.state.article)
+      this.getSavedArticles()
+    })
+    .catch(err => console.log(err.response))
+  }
+
+  openModal = data => this.setState({article: data, showModal: true})
+  closeModal = () => this.setState({showModal: false})
+  
+
   render() {
     return (
       <Container fluid>
@@ -76,11 +122,20 @@ class Home extends Component {
         {this.state.savedArticles.length ? <Saved 
                                               title="Saved"
                                               deleteArticle={this.deleteArticle.bind(this)}
+                                              openModal={this.openModal.bind(this)}
                                               savedArticles={this.state.savedArticles}/> 
                                               : ""}
+        {(this.state.showModal) ? <Modal 
+          article={this.state.article}
+          closeModal={this.closeModal.bind(this)}
+          value={this.state.note}
+          handleChange={this.handleChange.bind(this)}
+          saveNote={this.saveNote.bind(this)}
+          deleteNote={this.deleteNote.bind(this)}
+          /> : "" }
       </Container>
-    );
+    )
   }
 }
 
-export default Home;
+export default Home

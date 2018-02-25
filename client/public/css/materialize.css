@@ -1,20 +1,20 @@
 .ben {
-  background-color: #673AB7 !important; }
+  background-color: #052D3E !important; }
 
 .ben-text {
-  color: #673AB7 !important; }
+  color: #052D3E !important; }
 
 .ben.accent {
-  background-color: #CDDC39 !important; }
+  background-color: #F4C127 !important; }
 
 .ben-text.text-accent {
-  color: #CDDC39 !important; }
+  color: #F4C127 !important; }
 
 .ben.text {
-  background-color: #212121 !important; }
+  background-color: #4D9BA6 !important; }
 
 .ben-text.text-text {
-  color: #212121 !important; }
+  color: #4D9BA6 !important; }
 
 .ben.text-2 {
   background-color: #757575 !important; }
@@ -59,16 +59,16 @@
   color: #ee6e73 !important; }
 
 .ben.lighten-1 {
-  background-color: #D1C4E9 !important; }
+  background-color: #D87D0F !important; }
 
 .ben-text.text-lighten-1 {
-  color: #D1C4E9 !important; }
+  color: #D87D0F !important; }
 
 .ben.darken-1 {
-  background-color: #512DA8 !important; }
+  background-color: #A63305 !important; }
 
 .ben-text.text-darken-1 {
-  color: #512DA8 !important; }
+  color: #A63305 !important; }
 
 .ben.darken-2 {
   background-color: #b9151b !important; }

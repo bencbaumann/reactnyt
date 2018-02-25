@@ -6,14 +6,17 @@ const nytApiController = require('../../controllers/nytApiController')
 router.route('/')
   .get(articlesController.findAll)
   .post(articlesController.create)
-  // .delete(booksController.create);
 
 // Matches with "/api/articles/fetch"
 router.route('/fetch')
   .post(nytApiController.fetch)
 
-// Matches with "/api/:id"
 router.route('/:id')
-  .delete(articlesController.remove)
+  .get(articlesController.findById)
+  .post(articlesController.addNoteToArticle)
+  .delete(articlesController.delete)
+
+router.route('/note/delete')
+  .post(articlesController.deleteNote)
 
 module.exports = router
